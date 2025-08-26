@@ -3,7 +3,7 @@ name: Run Python Script Daily
 on:
   schedule:
     # 设置在北京时间 2:14 AM 执行
-    - cron: '19 2 * * *'
+    - cron: '21 2 * * *'
   workflow_dispatch:
 
 # 关键设置：指定时区为北京时间
