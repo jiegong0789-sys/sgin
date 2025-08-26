@@ -1,19 +1,17 @@
-name: Run Python Script Daily
+name: Run Python Script Every Minute
 
 on:
   schedule:
-    # 设置在北京时间 2:14 AM 执行
-    - cron: '21 2 * * *'
+    # 每分钟执行一次（两种写法都可以）
+    - cron: '*/1 * * * *'
   workflow_dispatch:
 
-# 关键设置：指定时区为北京时间
 env:
   TZ: Asia/Shanghai
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,11 +22,10 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Run the script
         run: |
-          echo "当前时区: $TZ"
-          echo "执行时间: $(date)"
+          echo "🕒 当前时间: $(date)"
+          echo "🌐 时区: $TZ"
           python main.py
