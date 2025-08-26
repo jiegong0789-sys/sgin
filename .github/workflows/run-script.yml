@@ -10,7 +10,7 @@ on:
     - cron: '* * * * *'
 
   # 手动触发器：方便在 Actions 页面手动运行进行测试
-  workflow_dispatch:
+  #workflow_dispatch:
 
 jobs:
   # 任务 ID
