@@ -1,31 +1,43 @@
-name: Run Python Script Every Minute
+# .github/workflows/run-every-minute.yml
 
+# 工作流的名称
+name: Run Every Minute
+
+# 触发工作流的事件
 on:
+  # 1. 使用 schedule 触发器，设置 cron 表达式
+  # 格式: 分 时 日 月 周
+  # '* * * * *' 表示每分钟执行一次
   schedule:
-    # 每分钟执行一次（两种写法都可以）
-    - cron: '*/1 * * * *'
+    - cron: '* * * * *'
+
+  # 2. (可选但推荐) 添加 workflow_dispatch 触发器
+  # 这允许您在 GitHub Actions 页面手动触发此工作流，方便测试
   workflow_dispatch:
 
-env:
-  TZ: Asia/Shanghai
-
+# 定义工作流中的任务（jobs）
 jobs:
-  run-script:
+  # 任务的唯一 ID
+  my_scheduled_job:
+    # 任务运行的虚拟环境
     runs-on: ubuntu-latest
+
+    # 任务包含的步骤
     steps:
-      - name: Checkout code
+      # 第一步：检出你的代码库
+      # 这样你的脚本才能访问仓库中的文件
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+      # 第二步：执行你的命令或脚本
+      # 在这里替换成您想每分钟执行的具体操作
+      - name: Run a one-line script
+        run: echo "Hello, world! The time is $(date)."
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      # 示例：如果您想运行一个 Python 脚本
+      # - name: Run Python script
+      #   run: python your_script.py
 
-      - name: Run the script
-        run: |
-          echo "🕒 当前时间: $(date)"
-          echo "🌐 时区: $TZ"
-          python main.py
+      # 示例：如果您想运行一个 Node.js 脚本
+      # - name: Run Node.js script
+      #   run: node your_script.js
